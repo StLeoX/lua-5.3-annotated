@@ -2,49 +2,57 @@
 
 ## 1.1. Lua虚拟机内核
 
-lapi.c Lua API。实现大量的 Lua C API（lua_ * 函数）。  
-lctype.c 标准库中 ctype 相关实现。  
-ldebug.c 调试接口。  
-ldo.c Lua 的堆栈和调用结构。处理函数调用（luaD_call / luaD_pcall），扩展堆栈，协程处理等。  
-lfunc.c 函数原型及闭包管理。  
-lgc.c 垃圾回收。  
-lmem.c 内存管理接口【luaM_realloc / luaM_growaux_】。  
-lobject.c 对象操作的一些函数。包括数据类型 <-> 字符串转换，原始相等性测试（luaO_rawequalObj）和日志基础 2（luaO_log2）。  
-lopcodes.c 虚拟机的字节码定义。  
-lstate.c 全局状态机。包括用于打开和关闭 Lua 状态（lua_newstate / lua_close）和线程（luaE_newthread / luaE_freethread）的函数。  
-lstring.c 字符串池。  
-ltable.c 表类型的相关操作。Lua 表（hash）。  
-ltm.c 标记方法。实现从对象访问元方法。  
-lvm.c 虚拟机。执行字节码（luaV_execute）。还公开了 lapi.c 使用的一些功能（例如 luaV_concat）。  
-lzio.c 通用的缓冲输入流接口。
+|文件|作用|  
+|---|---|  
+|lapi.c| Lua API。实现大量的 Lua C API（lua_*函数）。
+|lctype.c| 标准库中ctype相关实现。
+|ldebug.c| 调试接口。
+|ldo.c| Lua的堆栈和调用结构。处理函数调用（luaD_call / luaD_pcall），扩展堆栈，协程处理等。
+|lfunc.c| 函数原型及闭包管理。
+|lgc.c| 垃圾回收器的实现。
+|lmem.c| 内存管理接口（luaM_realloc / luaM_growaux_）。
+|lobject.c| 对象操作的一些函数。包括数据类型与字符串转换，原始相等性测试（luaO_rawequalObj）和日志基础（luaO_log2）。
+|lopcodes.c| 虚拟机的字节码的定义。
+|lstate.c| 全局状态机。包括用于打开和关闭 Lua 状态（lua_newstate / lua_close）和线程（luaE_newthread / luaE_freethread）的函数。
+|lstring.c| 字符串函数库。
+|ltable.c| 表类型的相关操作。Lua表的代码名为hash。
+|ltm.c| 标记方法。实现从对象访问元方法。
+|lvm.c| 虚拟机。执行字节码（luaV_execute）。还公开了 lapi.c 使用的一些功能（例如 luaV_concat）。
+|lzio.c| 通用的缓冲输入流接口。
 
 ## 1.2. Lua词法分析器及预编译器
 
-lcode.c Lua 的代码生成器。由 lparser.c 调用。  
-ldump.c 保存预编译的 Lua 块。实现 luaU_dump，将功能对象转储为预编译的块字符串。  
-llex.c 词法分析器。由 lparser.c 使用。  
-lparser.c 解析器。  
-lundump.c 加载预编译的 Lua 块。
+|文件|作用|  
+|---|---|  
+|lcode.c| Lua 的代码生成器。被lparser.c调用。
+|ldump.c| 保存预编译的 Lua 块。实现 luaU_dump，将功能对象转储为预编译的块字符串。
+|llex.c| 词法分析器。被lparser.c调用。
+|lparser.c| 文法解析器。
+|lundump.c| 加载预编译的 Lua 块。
 
 ## 1.3. Lua内置库
 
-lauxlib.c 库编写用到的辅助函数库  
-lbaselib.c 基础库  
-lbitlib.c 位操作库  
-lcorolib.c 协程库  
-ldblib.c Debug 库  
-linit.c 内嵌库的初始化  
-liolib.c IO 库  
-lmathlib.c 数学库  
-loadlib.c 动态扩展库管理  
-loslib.c OS 库  
-lstrlib.c 字符串库  
-ltablib.c 表处理库
+|文件|作用|  
+|---|---|  
+|lauxlib.c| 库编写用到的辅助函数库（aux就是辅助的意思）
+|lbaselib.c| 基础库
+|lbitlib.c| 位操作库
+|lcorolib.c| 协程库
+|ldblib.c| Debug 库
+|linit.c| 内嵌库的初始化
+|liolib.c| IO库
+|lmathlib.c| 数学库
+|loadlib.c| 动态扩展库管理
+|loslib.c| OS库
+|lstrlib.c| 字符串库
+|ltablib.c| 表处理库
 
 ## 1.4. Lua字节码编译器与执行解释器
 
-luac.c Lua编译器（将字节码转储到文件中）  
-lua.c Lua解释器
+|文件|作用|  
+|---|---|  
+|luac.c| Lua编译器（将字节码转储到文件中）
+|lua.c| Lua解释器
 
 # 2. 源码符号约定
 

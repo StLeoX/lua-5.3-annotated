@@ -55,16 +55,20 @@ static int auxresume (lua_State *L, lua_State *co, int narg) {
 
 
 static int luaB_coresume (lua_State *L) {
+  // 获得L上的co
   lua_State *co = getco(L);
   int r;
   r = auxresume(L, co, lua_gettop(L) - 1);
   if (r < 0) {
+    // 插入错误标志
     lua_pushboolean(L, 0);
     lua_insert(L, -2);
     return 2;  /* return false + error message */
   }
   else {
+    // 插入成功标志
     lua_pushboolean(L, 1);
+    // r保存的是插入位置相关的idx
     lua_insert(L, -(r + 1));
     return r + 1;  /* return true + 'resume' returns */
   }
@@ -88,9 +92,13 @@ static int luaB_auxwrap (lua_State *L) {
 
 static int luaB_cocreate (lua_State *L) {
   lua_State *NL;
+  // 参数检查，需要一个函数对象
   luaL_checktype(L, 1, LUA_TFUNCTION);
+  // 新例程
   NL = lua_newthread(L);
+  // 压栈，idx=1表示就绪
   lua_pushvalue(L, 1);  /* move function to top */
+  // 转移到新例程
   lua_xmove(L, NL, 1);  /* move function from L to NL */
   return 1;
 }
@@ -98,6 +106,7 @@ static int luaB_cocreate (lua_State *L) {
 
 static int luaB_cowrap (lua_State *L) {
   luaB_cocreate(L);
+  // wrap的含义就是将function封装为closure。
   lua_pushcclosure(L, luaB_auxwrap, 1);
   return 1;
 }

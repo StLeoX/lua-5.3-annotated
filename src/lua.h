@@ -48,17 +48,17 @@
 
 
 /* thread status */
-// 协程状态码
-#define LUA_OK		0
-#define LUA_YIELD	1
-#define LUA_ERRRUN	2
-#define LUA_ERRSYNTAX	3
-#define LUA_ERRMEM	4
+// 协程状态枚举
+#define LUA_OK		0// 无错误
+#define LUA_YIELD	1// 可让出
+#define LUA_ERRRUN	2// 运行时错误
+#define LUA_ERRSYNTAX	3// 编译错误
+#define LUA_ERRMEM	4// 运行时内存错误
 #define LUA_ERRGCMM	5
 #define LUA_ERRERR	6
 
 
-// lua 虚拟机结构
+// lua 虚拟机状态：存放中心数据，方便外围存取
 typedef struct lua_State lua_State;
 
 
@@ -126,15 +126,16 @@ typedef int (*lua_KFunction) (lua_State *L, int status, lua_KContext ctx);
 /*
 ** Type for functions that read/write blocks when loading/dumping Lua chunks
 */
+// lua_Reader：读字节数组从（ud，sz）到参数L
 typedef const char * (*lua_Reader) (lua_State *L, void *ud, size_t *sz);
-
+// lua_Writer：写字节数组从L到（ud，sz）
 typedef int (*lua_Writer) (lua_State *L, const void *p, size_t sz, void *ud);
 
 
 /*
 ** Type for memory-allocation functions
 */
-// 内存分配函数原型
+// "内存分配函数"类型：从
 typedef void * (*lua_Alloc) (void *ud, void *ptr, size_t osize, size_t nsize);
 
 

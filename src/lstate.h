@@ -180,12 +180,15 @@ struct lua_State {
   unsigned short nci;  /* number of items in 'ci' list */
   lu_byte status;
   StkId top;  /* first free slot in the stack */
+  // 关联全局状态
   global_State *l_G;
+  // 调用相关
   CallInfo *ci;  /* call info for current function */
   const Instruction *oldpc;  /* last pc traced */
   StkId stack_last;  /* last free slot in the stack */
   StkId stack;  /* stack base */
   UpVal *openupval;  /* list of open upvalues in this stack */
+  // GC相关
   GCObject *gclist;
   struct lua_State *twups;  /* list of threads with open upvalues */
   struct lua_longjmp *errorJmp;  /* current error recover point */

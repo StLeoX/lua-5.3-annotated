@@ -149,6 +149,7 @@ typedef union Value {
 //   Value value_;  // union 类型的值
 //   int tt_;       // 类型标记
 // };
+// 所以TValue是一个能标识自己的基本类型，且能存取的类型；可以理解为auto的实现。
 //---------------------------------------------------------------------
 typedef struct lua_TValue {
   TValuefields;
@@ -350,7 +351,7 @@ typedef struct lua_TValue {
 ** =======================================================
 */
 
-
+// 对栈元素的索引；考虑到栈能存任意类型，所以使用TValue *指针。
 typedef TValue *StkId;  /* index to stack elements */
 
 
@@ -384,6 +385,7 @@ typedef struct TString {
 ** Ensures that address after this type is always fully aligned.
 */
 // 内存对齐用，其他几节也有类似定义
+// 内存对齐目标是支持非int8的宽字符
 typedef union UTString {
   L_Umaxalign dummy;  /* ensures maximum alignment for strings */
   TString tsv;
